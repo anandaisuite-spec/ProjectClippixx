@@ -1,0 +1,401 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Manrope:wght@400;700&family=Playfair+Display:ital,wght@1,600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+
+  /* CSS Custom Properties for theming */
+  :root {
+    /* Theme variables (injected by ThemeProvider) */
+    --theme-gradient: linear-gradient(to bottom, #ffffff, #f8fafc);
+    --theme-primary: #8b5cf6;
+    --theme-accent: #06b6d4;
+    --theme-surface: rgba(139, 92, 246, 0.05);
+    --theme-text: #0f172a;
+
+    /* Scrollbar and selection colors */
+    --scrollbar-track: #e5e7eb;
+    --scrollbar-thumb: #8b5cf6;
+    --scrollbar-thumb-hover: #7c3aed;
+    --selection-bg: rgba(139, 92, 246, 0.2);
+    --selection-text: #1f2937;
+
+    /* Transition for smooth theme changes */
+    transition: background 300ms ease, color 300ms ease;
+  }
+
+  /* Dark mode CSS variables */
+  :root.dark {
+    --scrollbar-track: #1a1a2e;
+    --scrollbar-thumb: #a78bfa;
+    --scrollbar-thumb-hover: #8b5cf6;
+    --selection-bg: rgba(167, 139, 250, 0.3);
+    --selection-text: #f3f4f6;
+  }
+
+  .gradient-italic {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-style: italic;
+    font-weight: 600;
+    background: linear-gradient(135deg, #7c3aed, #4f46e5, #2563eb);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    display: inline-block;
+    padding: 0.1em 0.25em 0.25em 0.1em;
+    margin: -0.1em -0.15em -0.2em -0.05em;
+    overflow: visible;
+  }
+
+  :root.dark .gradient-italic {
+    background: linear-gradient(135deg, #a78bfa, #818cf8, #60a5fa);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    font-kerning: normal;
+  }
+
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background: var(--theme-gradient);
+    background-attachment: fixed;
+    min-height: 100vh;
+    color: var(--theme-text);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    font-kerning: normal;
+    transition: background 300ms ease, color 300ms ease;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+  }
+
+  /* Typography smoothing for headings - disable subpixel fractional jitter */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    translate: 0 0;
+  }
+
+  /* Hero section CPU text rasterization */
+  .hero,
+  .hero * {
+    transform: none !important;
+    filter: none !important;
+    will-change: auto !important;
+  }
+
+  :root:not(.dark) body {
+    background-image: linear-gradient(to right top, #d4a5ff, #b3baff, #97cbff, #8cd9ff, #94e3ff);
+    background-attachment: fixed;
+    color: #1e293b;
+  }
+
+  /* Light mode text visibility overrides */
+  :root:not(.dark) .text-gray-400 {
+    color: #64748b !important;
+  }
+
+  :root:not(.dark) .text-gray-500 {
+    color: #475569 !important;
+  }
+
+  :root:not(.dark) .text-gray-600,
+  :root:not(.dark) .text-dark-400 {
+    color: #334155 !important;
+  }
+
+  :root:not(.dark) .text-dark-300 {
+    color: #475569 !important;
+  }
+
+  :root:not(.dark) .text-dark-500 {
+    color: #64748b !important;
+  }
+
+  :root:not(.dark) .placeholder-gray-400::placeholder {
+    color: #64748b !important;
+  }
+
+  #root {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background-color: var(--selection-bg);
+    color: var(--selection-text);
+  }
+
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: var(--scrollbar-track);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-thumb);
+    border-radius: 9999px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--scrollbar-thumb-hover);
+  }
+}
+
+@layer components {
+  .text-gradient {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(to right, var(--text-primary), #a78bfa, #8b5cf6);
+  }
+
+  .section-pill-gradient {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(to right, #a78bfa, #38bdf8);
+  }
+
+  /* Filled oval pill for section badges */
+  .section-pill-oval {
+    background: linear-gradient(135deg,
+        rgba(184, 168, 255, 0.28) 0%,
+        rgba(143, 167, 255, 0.28) 50%,
+        rgba(111, 183, 255, 0.28) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.28);
+    box-shadow:
+      0 0 0 1px rgba(147, 197, 253, 0.35),
+      0 10px 24px rgba(64, 78, 130, 0.18);
+    color: #c7b5ff;
+  }
+
+  :root:not(.dark) .section-pill-oval {
+    background: linear-gradient(135deg,
+        rgba(200, 185, 255, 0.24) 0%,
+        rgba(164, 195, 255, 0.24) 50%,
+        rgba(130, 209, 255, 0.24) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.32);
+    box-shadow:
+      0 0 0 1px rgba(147, 197, 253, 0.4),
+      0 10px 20px rgba(64, 78, 130, 0.14);
+    color: #7c5df6;
+  }
+
+  .glass {
+    @apply backdrop-blur-xl border;
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+
+  .dark .glass {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+
+  :not(.dark) .glass {
+    background: rgba(0, 0, 0, 0.02);
+    border-color: rgba(0, 0, 0, 0.08);
+  }
+
+  .glass-dark {
+    @apply backdrop-blur-xl border;
+    background: rgba(15, 23, 42, 0.8);
+    border-color: rgba(255, 255, 255, 0.05);
+  }
+
+  :not(.dark) .glass-dark {
+    background: rgba(255, 255, 255, 0.9);
+    border-color: rgba(0, 0, 0, 0.08);
+  }
+
+  .glass-card {
+    @apply backdrop-blur-xl border;
+    background: linear-gradient(150deg, rgba(255, 255, 255, 0.85), rgba(248, 250, 255, 0.80));
+    border-color: rgba(255, 255, 255, 0.5);
+    box-shadow: 0 8px 32px rgba(100, 110, 140, 0.12), 0 4px 12px rgba(100, 110, 140, 0.08);
+    color: #0f172a;
+  }
+
+  :root:not(.dark) .glass-card {
+    background: linear-gradient(150deg, rgba(255, 255, 255, 0.65), rgba(240, 245, 255, 0.60));
+    border-color: rgba(255, 255, 255, 0.6);
+    box-shadow: 0 8px 32px rgba(120, 100, 180, 0.15), 0 4px 16px rgba(120, 100, 180, 0.10);
+  }
+
+  :root.dark .glass-card {
+    background: linear-gradient(150deg, rgba(20, 35, 55, 0.95), rgba(12, 22, 38, 0.9));
+    border-color: rgba(148, 163, 184, 0.2);
+    box-shadow: 0 18px 40px rgba(2, 6, 23, 0.35);
+    color: #e2e8f0;
+  }
+
+  .glass-card-muted {
+    color: #475569;
+  }
+
+  :root.dark .glass-card-muted {
+    color: rgba(203, 213, 225, 0.9);
+  }
+
+  /* For-Business use-case cards — theme-aware.
+     Light: clean white surface. Dark: violet-bordered glowing card. */
+  .forbiz-card {
+    background-color: #ffffff;
+    border: 1px solid rgba(124, 58, 237, 0.3);
+    box-shadow: none;
+  }
+
+  :root.dark .forbiz-card {
+    background-color: #0f0d1f;
+    border: 1px solid rgba(124, 58, 237, 0.5);
+    box-shadow: none;
+  }
+
+  /* Icon chip inside the card */
+  .forbiz-card-icon {
+    background-color: rgba(124, 58, 237, 0.08);
+    border: 1px solid rgba(124, 58, 237, 0.15);
+  }
+
+  :root.dark .forbiz-card-icon {
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .glow-border {
+    @apply relative;
+  }
+
+  .glow-border::before {
+    content: '';
+    @apply absolute inset-0 rounded-full;
+    background: linear-gradient(135deg, rgba(139, 92, 246, 0.4), rgba(59, 130, 246, 0.4));
+    filter: blur(20px);
+    z-index: -1;
+  }
+}
+
+@layer utilities {
+  .clip-text {
+    -webkit-background-clip: text;
+    background-clip: text;
+  }
+
+  /* Theme-aware text utilities */
+  .theme-text-primary {
+    color: var(--text-primary);
+  }
+
+  .theme-text-secondary {
+    color: var(--text-secondary);
+  }
+
+  .theme-text-muted {
+    color: var(--text-muted);
+  }
+}
+
+/* ──────────────────────────────────────────────────────────────────────────
+   Global form-focus normalization.
+   Removes the browser's default outline / focus glow so focused inputs never
+   show a double border (own border + UA outline). On focus, every input,
+   textarea, and select shows ONLY a single purple border. Applies app-wide
+   (signup, signin, onboarding, settings, booking, dashboard, etc.) in both
+   light and dark mode.
+   ────────────────────────────────────────────────────────────────────────── */
+input:focus,
+input:focus-visible,
+textarea:focus,
+textarea:focus-visible,
+select:focus,
+select:focus-visible {
+  outline: none !important;
+  outline-offset: 0 !important;
+  box-shadow: none !important;
+  border-color: #7C3AED !important;
+}
+
+/* ──────────────────────────────────────────────────────────────────────────
+   Smooth theme switching.
+   Animate only the colour-related properties (background, border, text) so
+   toggling light/dark fades instead of snapping. We deliberately do NOT
+   transition `all`/transform/opacity here — those belong to component-level
+   hover/scroll animations and would feel laggy if globally tweened.
+   ────────────────────────────────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  transition-property: background-color, border-color, color, fill, stroke;
+  transition-duration: 300ms;
+  transition-timing-function: ease;
+}
+
+/* Respect users who prefer reduced motion. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0ms;
+  }
+}
+
+
+/* ──────────────────────────────────────────────────────────────────────────
+   Mobile-responsiveness utilities (audit fixes)
+   ────────────────────────────────────────────────────────────────────────── */
+
+/* Right-edge scroll-indicator shadow for horizontally scrollable tables.
+   The cover gradient is background-attachment:local (scrolls with content),
+   so the shadow is visible ONLY while more content is hidden to the right,
+   and disappears when fully scrolled or when nothing overflows. */
+.hscroll-shadow {
+  --scroll-bg: #ffffff;
+  background-image:
+    linear-gradient(to left, var(--scroll-bg) 35%, transparent),
+    radial-gradient(farthest-side at 100% 50%, rgba(15, 23, 42, 0.22), transparent);
+  background-position: right center, right center;
+  background-size: 32px 100%, 12px 100%;
+  background-repeat: no-repeat, no-repeat;
+  background-attachment: local, scroll;
+}
+
+:root.dark .hscroll-shadow {
+  --scroll-bg: #0d1230;
+  background-image:
+    linear-gradient(to left, var(--scroll-bg) 35%, transparent),
+    radial-gradient(farthest-side at 100% 50%, rgba(0, 0, 0, 0.55), transparent);
+}
+
+/* 44px minimum touch target for standard text buttons/links on TOUCH devices.
+   Targets exactly the py-2 / py-2.5 sizing tier flagged in the audit. Scoped
+   to pointer:coarse so desktop mouse layouts keep their exact pixel design. */
+@media (pointer: coarse) {
+  button.py-2,
+  button.py-2\.5,
+  a.py-2,
+  a.py-2\.5 {
+    min-height: 44px;
+  }
+}

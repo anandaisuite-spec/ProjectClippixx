@@ -1,0 +1,22 @@
+[
+  {
+    "id": "Mlz8O4dXB0N7TvTvjDJiBfw74Up2",
+    "email": "testuser@clipixx.com",
+    "role": "user"
+  },
+  {
+    "id": "EpQFe4pGQLeVKtcP2EtTotvi6e93",
+    "email": "itsluffytaro696969@gmaill.com",
+    "role": "user"
+  },
+  {
+    "id": "moNImG50HTY1mwQZrSmx3bcicfl2",
+    "email": "demouser@clipixx.com",
+    "role": "user"
+  },
+  {
+    "id": "jOCJA4Pb16XNAgAistGmfCU2bWA2",
+    "email": "superadmin@gmail.com",
+    "role": "super_admin"
+  }
+]

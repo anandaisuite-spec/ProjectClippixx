@@ -1,0 +1,73 @@
+.curved-loop-jacket {
+    padding: 2.5rem 0;
+    margin-left: -2rem;
+    margin-right: -2rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.1);
+    -webkit-backdrop-filter: blur(24px);
+    backdrop-filter: blur(24px);
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+/* Dark mode - translucent glass effect */
+:root.dark .curved-loop-jacket {
+    background: rgba(255, 255, 255, 0.08);
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+}
+
+/* Light mode - translucent glass effect */
+:root:not(.dark) .curved-loop-jacket {
+    background: rgba(0, 0, 0, 0.05);
+    border-top: 1px solid rgba(0, 0, 0, 0.08);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+.curved-loop-svg {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+    width: 100vw;
+    height: auto;
+    min-height: 70px;
+    max-height: 90px;
+    overflow: visible;
+    display: block;
+    font-size: 2.5rem;
+    line-height: 1;
+}
+
+/* Italic text styling */
+.curved-loop-svg text {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-weight: 400;
+    letter-spacing: 0.05em;
+    opacity: 0.05;
+    fill: currentColor;
+    transform: scaleY(1.50);
+    transform-origin: center;
+    dominant-baseline: middle;
+    alignment-baseline: middle;
+}
+
+:root.dark .curved-loop-svg text {
+    fill: rgba(255, 255, 255, 1);
+    opacity: 0.3;
+}
+
+:root:not(.dark) .curved-loop-svg text {
+    fill: rgba(15, 23, 42, 1);
+    opacity: 0.5;
+}

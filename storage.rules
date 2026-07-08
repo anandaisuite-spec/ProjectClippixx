@@ -1,0 +1,35 @@
+rules_version = '2';
+
+// Firebase Storage Security Rules — server-enforced, cannot be bypassed by
+// calling the Storage API directly (unlike the client-side validateUpload checks
+// in src/utils/upload.ts, which only guard the app's own UI).
+//
+// Deploy: Firebase Console → Storage → Rules → paste → Publish
+//   (or `firebase deploy --only storage` if the project adopts the CLI).
+//
+// Upload paths used by the app (see UserProfilePage.tsx / AccountSettings.tsx):
+//   avatars/{uid}/{random}.{ext}
+
+service firebase.storage {
+  match /b/{bucket}/o {
+
+    // ── User avatars ──
+    match /avatars/{userId}/{fileName=**} {
+      // Avatars are public-facing (shown on profiles), so anyone may read.
+      allow read: if true;
+
+      // Only the owner, signed in, may write into their own folder.
+      // Size + content-type mirror the client-side allow-list exactly.
+      allow write: if request.auth != null
+                   && request.auth.uid == userId
+                   && request.resource.size < 5 * 1024 * 1024
+                   && request.resource.contentType.matches('image/(jpeg|png|webp)');
+    }
+
+    // ── Catch-all ──
+    // Anything not explicitly matched above is denied (read + write).
+    match /{allPaths=**} {
+      allow read, write: if false;
+    }
+  }
+}

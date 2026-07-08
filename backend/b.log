@@ -1,0 +1,20 @@
+[dotenv@17.3.1] injecting env (11) from .env -- tip: ⚙️  specify custom .env file path with { path: '/custom/path/.env' }
+[dotenv@17.3.1] injecting env (0) from .env -- tip: 🔐 prevent building .env in docker: https://dotenvx.com/prebuild
+[dotenv@17.3.1] injecting env (0) from .env -- tip: 🔐 prevent building .env in docker: https://dotenvx.com/prebuild
+✅ Firebase Admin SDK initialized
+
+🚀 Clipixx Backend Server
+   ├── Running on: http://localhost:5000
+   ├── Health:     http://localhost:5000/api/health
+   ├── Stars API:  http://localhost:5000/api/stars
+   ├── Admin API:  http://localhost:5000/api/admin
+   ├── Users API:  http://localhost:5000/api/users
+   ├── Orders API: http://localhost:5000/api/orders
+   ├── Reviews API: http://localhost:5000/api/reviews
+   ├── Verify API: http://localhost:5000/api/verification
+   ├── CORS:       http://localhost:5173, http://localhost:5174, http://localhost:3000
+   └── Environment: development
+
+✅ PostgreSQL connected successfully
+[2026-06-16T16:15:27.031Z] GET /api/stars
+[2026-06-16T16:15:27.178Z] GET /api/stars/8d3893a1-c1c0-4fcf-99e5-05f174d88502

@@ -1,0 +1,76 @@
+
+
+services:
+  app:
+    image: clipixx-app:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - VITE_API_URL=/api
+        - VITE_FIREBASE_API_KEY=${VITE_FIREBASE_API_KEY}
+        - VITE_FIREBASE_AUTH_DOMAIN=${VITE_FIREBASE_AUTH_DOMAIN}
+        - VITE_FIREBASE_PROJECT_ID=${VITE_FIREBASE_PROJECT_ID}
+        - VITE_FIREBASE_STORAGE_BUCKET=${VITE_FIREBASE_STORAGE_BUCKET}
+        - VITE_FIREBASE_MESSAGING_SENDER_ID=${VITE_FIREBASE_MESSAGING_SENDER_ID}
+        - VITE_FIREBASE_APP_ID=${VITE_FIREBASE_APP_ID}
+        - VITE_FIREBASE_MEASUREMENT_ID=${VITE_FIREBASE_MEASUREMENT_ID}
+    container_name: clipixx-app
+    restart: always
+    ports:
+      - "5000:5000"
+    # These OVERRIDE values from env_file (./backend/.env), so the developer's
+    # local dev .env can keep NODE_ENV=development / localhost values while the
+    # deployed container gets correct production values here.
+    environment:
+      - NODE_ENV=production
+      - DB_HOST=db
+      # Same-origin deployment: the SPA and /api share this host:port, so list the
+      # server's own address. Add a domain here too if you put one in front.
+      - CORS_ORIGIN=http://192.168.1.10:5000
+      # Used for transactional email links — must point at the deployed frontend.
+      - FRONTEND_URL=http://192.168.1.10:5000
+      # Firebase Admin credentials injected at runtime (base64 of the service
+      # account JSON). This is the production-safe path — the gitignored JSON file
+      # is NOT required in the image. Generate with:
+      #   base64 -w0 backend/config/firebase-service-account.json
+      # then paste the result here or set it in the CasaOS env UI.
+      - FIREBASE_SERVICE_ACCOUNT_JSON=${FIREBASE_SERVICE_ACCOUNT_JSON}
+    env_file:
+      - ./backend/.env
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    image: postgres:16-alpine
+    container_name: clipixx-db
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: clipixx123
+      POSTGRES_DB: clipixx
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d clipixx"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  pgdata:
+
+# CasaOS Integration Metadata
+x-casaos:
+  architectures:
+    - amd64
+    - arm64
+  main: app
+  icon: https://raw.githubusercontent.com/itsvickyl/clippixx/main/public/favicon.ico
+  title:
+    en_us: Clippixx
+  tagline:
+    en_us: Full-stack media sharing platform
+  developer: Clippixx
+  port_map: "5000"
